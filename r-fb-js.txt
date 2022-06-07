@@ -1,0 +1,138 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+security passwords min-length 10
+!
+hostname r-fb-js
+!
+login block-for 120 attempts 3 within 60
+!
+!
+enable secret 5 $1$mERr$edOpZQ3fHAPCAlXFZ6KYk/
+!
+!
+!
+!
+!
+!
+no ip cef
+ipv6 unicast-routing
+!
+no ipv6 cef
+!
+!
+!
+username jeferson secret 5 $1$mERr$F5V/u2120qbEqnDJcxLe00
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017S0GD-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain-name jeferson.souza.com.br
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description Filial1
+ ip address 200.200.60.65 255.255.255.224
+ duplex auto
+ speed auto
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:3C01::1/64
+ ipv6 enable
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ description fb-ita
+ ip address 200.200.60.233 255.255.255.252
+ ipv6 address 2001:DB8:ACAD:3CFF::2:1/112
+ ipv6 enable
+!
+interface Serial0/0/1
+ description vit-fb
+ ip address 200.200.60.230 255.255.255.252
+ ipv6 address 2001:DB8:ACAD:3CFF::1:2/112
+ ipv6 enable
+ clock rate 2000000
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 200.200.60.0 255.255.255.192 200.200.60.234 
+ip route 200.200.60.96 255.255.255.224 200.200.60.234 
+ip route 200.200.60.224 255.255.255.252 200.200.60.234 
+ip route 200.200.60.236 255.255.255.252 200.200.60.234 
+ip route 200.200.60.240 255.255.255.252 200.200.60.234 
+!
+ip flow-export version 9
+!
+ipv6 route 2001:DB8:ACAD:3C00::/64 2001:DB8:ACAD:3CFF::2:2
+ipv6 route 2001:DB8:ACAD:3C02::/64 2001:DB8:ACAD:3CFF::2:2
+ipv6 route 2001:DB8:ACAD:3CFF::3:0/112 2001:DB8:ACAD:3CFF::2:2
+ipv6 route 2001:DB8:ACAD:3CFF::/112 2001:DB8:ACAD:3CFF::2:2
+ipv6 route 2001:DB8:ACAD:3CFF::4:0/112 2001:DB8:ACAD:3CFF::2:2
+!
+ip access-list extended sl_def_acl
+ deny tcp any any eq telnet
+ deny tcp any any eq www
+ deny tcp any any eq 22
+ permit tcp any any eq 22
+!
+no cdp run
+!
+banner motd $----------------------------------------------------------------
+|                                              |
+| Roteador Francisco Beltro                                     |
+|                                              |
+| ATENCAO Acesso Restrito a pessoas autorizadas!                      |
+|                                              |
+| Administrador: JEFERSON ROSA DE SOUZA (jefsou@alunos.utfpr.edu.br)        |
+|                                              |
+-----------------------------------------------------------------------------$
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 5 0
+ password 7 08016F41070A481D170D091639242A
+ login
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 5 0
+ login local
+ transport input ssh
+line vty 5 15
+ exec-timeout 5 0
+ login local
+ transport input ssh
+!
+!
+!
+end
+
