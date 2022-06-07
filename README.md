@@ -220,7 +220,7 @@
    no shutdown
    exit
    ip route 200.200.60.228 255.255.255.252 200.200.60.226
-   ip route 200.200.60.232 255.255.255.25 2200.200.60.226
+   ip route 200.200.60.232 255.255.255.252 200.200.60.226
    ip route 200.200.60.240 255.255.255.252 200.200.60.226
    ip route 200.200.60.64 255.255.255.224 200.200.60.226
    ip route 200.200.60.96 255.255.255.224 200.200.60.226
@@ -330,71 +330,3 @@
 ## Itapejara D`Oeste
 
 1. Roteador
-
-   ```bash
-   enable
-   conf t
-   hostname r-ita-js
-   ipv6 unicast-routing
-   interface Se0/0/0
-   description ita-pb
-   clock rate 56000
-   ip address 200.200.60.237 255.255.255.252
-   ipv6 address 2001:DB8:ACAD:3CFF::3:1/112
-   ipv6 enable
-   no shutdown
-   exit
-   interface Se0/0/1
-   description fb-ita
-   ip address 200.200.60.234 255.255.255.252
-   ipv6 address 2001:DB8:ACAD:3CFF::2:2/112
-   ipv6 enable
-   no shutdown
-   exit
-   interface fa0/1
-   description cv-ita
-   ip address 200.200.60.241 255.255.255.252
-   ipv6 address 2001:DB8:ACAD:3CFF::4:1/112
-   ipv6 enable
-   no shutdown
-   exit
-   ip route 200.200.60.0 255.255.255.192 200.200.60.238
-   ip route 200.200.60.64 255.255.255.224 200.200.60.238
-   ip route 200.200.60.96 255.255.255.224 200.200.60.238
-   ip route 200.200.60.224 255.255.255.252 200.200.60.238
-   ip route 200.200.60.228 255.255.255.252 200.200.60.238
-   ipv6 route 2001:DB8:ACAD:3C00::/64 2001:DB8:ACAD:3CFF::3:2
-   ipv6 route 2001:DB8:ACAD:3C01::/64 2001:DB8:ACAD:3CFF::3:2
-   ipv6 route 2001:DB8:ACAD:3C02::/64 2001:DB8:ACAD:3CFF::3:2
-   ipv6 route 2001:DB8:ACAD:3CFF::/112 2001:DB8:ACAD:3CFF::3:2
-   ipv6 route 2001:DB8:ACAD:3CFF::1:0/112 2001:DB8:ACAD:3CFF::3:2
-
-   security passwords min-length 10
-   login block-for 120 attempts 3 within 60
-   line vty 0 15
-   exec-timeout 5
-   login local
-   transport input ssh
-   exit
-   service password-encryption
-   line con 0
-   exec-timeout 5
-   password @Cons-jeferson
-   login
-   exit
-   enable secret @dmin-jeferson
-   banner motd $	----------------------------------------------------------------
-   | 															                                             |
-   | Roteador Itapejara D`Oeste 						                                     |
-   | 															                                             |
-   | ATENCAO Acesso Restrito a pessoas autorizadas! 				                     |
-   | 															                                             |
-   | Administrador: JEFERSON ROSA DE SOUZA (jefsou@alunos.utfpr.edu.br) 	       |
-   | 															                                             |
-   -----------------------------------------------------------------------------$
-   ip domain name jeferson.souza.com.br
-   crypto key generate rsa general-keys modulus 1024
-   username jeferson secret ssh@Network1ng
-   exit
-   w
-   ```
